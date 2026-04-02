@@ -1,10 +1,9 @@
-{{!< default}}
-
+{{#*inline "body"}}
 {{!-- The tag above means: insert everything in this file
 into the {body} tag of the default.hbs template --}}
 
 {{!-- Special header.hbs partial to generate the <header> tag --}}
-{{> header background=@site.cover_image}}
+{{> partials/header background=@root.site.cover_image}}
 
 <main class="main-wrap" style="padding-top: 100px;">
     <section class="article-header gh-canvas" data-animate="fade" style="margin-bottom: 30px;">
@@ -36,3 +35,5 @@ into the {body} tag of the default.hbs template --}}
     {{/foreach}}
     </div>
 </main>
+{{/inline}}
+{{> default}}

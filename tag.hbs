@@ -1,3 +1,4 @@
+{{#*inline "body"}}
 {{!--
 This template is used for the tag page.
 --}}
@@ -14,18 +15,18 @@ This template is used for the tag page.
 
 {{!-- The tag below means: insert everything in this file
 into the {body} of the default.hbs template --}}
-{{!< default}}
+
 
 {{!-- Special header.hbs partial to generate the <header> tag --}}
-{{#tag}}
-  {{> header background=feature_image}}
-{{/tag}}
+{{#with tag}}
+  {{> partials/header background=feature_image}}
+{{/with}}
 
 <main class="main-wrap">
   {{!-- Everything inside the #tag tags pulls data from the tag --}}
-  {{#tag}}
+  {{#with tag}}
     {{!-- Inject styles of the hero image to make it responsive --}}
-    {{> hero background=feature_image}}
+    {{> partials/hero background=feature_image}}
     <div class="m-hero__content" data-animate="fade-down">
       <h1 class="m-hero-title bigger">{{name}}</h1>
       {{#if description}}
@@ -36,22 +37,24 @@ into the {body} of the default.hbs template --}}
       <div class="m-hero__meta">
         <ul class="m-hero-stats">
           <li>
-            {{plural ../pagination.total empty=(t "No posts") singular=(t "1 post") plural=(t "% posts")}} {{t "with this tag"}}
+            {{plural ../pagination.total empty="No posts" singular="1 post" plural="% posts"}} with this tag
           </li>
         </ul>
       </div>
     </div>
     </section>
-  {{/tag}}
+  {{/with}}
   
   <div class="l-content">
     <div class="l-wrapper" data-animate="fade-up">
       <div class="l-grid centered">
         {{!-- The tag below iterates over all the posts --}}
-        {{> "loop"}}
+        {{> partials/loop}}
       </div>
     </div>
     {{!-- Links to Previous/Next posts --}}
     {{pagination}}
   </div>
 </main>
+{{/inline}}
+{{> default}}

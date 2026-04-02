@@ -1,3 +1,4 @@
+{{#*inline "body"}}
 {{!--
 This template is used for the authors page.
 You must first create a page called Authors in the dashboard to enable it.
@@ -15,17 +16,17 @@ You must first create a page called Authors in the dashboard to enable it.
 
 {{!-- The tag below means: insert everything in this file
 into the {body} of the default.hbs template --}}
-{{!< default}}
+
 
 {{!-- Special header.hbs partial to generate the <header> tag --}}
-{{#post}}
-  {{> header background=feature_image}}
-{{/post}}
+{{#with post}}
+  {{> partials/header background=feature_image}}
+{{/with}}
 
-{{#post}}
+{{#with post}}
   <main class="main-wrap">
     {{!-- Inject styles of the hero image to make it responsive --}}
-    {{> hero background=feature_image}}
+    {{> partials/hero background=feature_image}}
     <div class="m-hero__content" data-animate="fade-down">
       <h1 class="m-hero-title bigger">{{title}}</h1>
       {{#if custom_excerpt}}
@@ -45,11 +46,11 @@ into the {body} of the default.hbs template --}}
                   {{else}}
                     <img clasS="m-article-card__picture-background" src="{{asset "images/default-avatar-rectangle.jpg"}}" loading="lazy" alt="">
                   {{/if}}
-                  <a href="{{url}}" class="m-article-card__picture-link" aria-label="{{name}}"></a>
+                  <a href="/{{slug}}" class="m-article-card__picture-link" aria-label="{{name}}"></a>
                   <h3 class="m-article-card__name">{{name}}</h3>
                 </div>
                 <div class="m-article-card__info">
-                  <a href="{{url}}" class="m-article-card__info-link" aria-hidden="true" tabindex="-1">
+                  <a href="/{{slug}}" class="m-article-card__info-link" aria-hidden="true" tabindex="-1">
                     {{#if bio}}
                       <p class="m-article-card__excerpt js-article-card-title">
                         {{bio}}
@@ -58,13 +59,13 @@ into the {body} of the default.hbs template --}}
                   </a>
                   <div class="m-article-card__author-stats">
                     <span>
-                      {{plural count.posts empty=(t "No posts") singular=(t "1 post") plural=(t "% posts")}}
+                      {{plural count.posts empty="No posts" singular="1 post" plural="% posts"}}
                     </span>
-                    {{#has any="twitter, facebook, website"}}
+                    {{#match any "twitter, facebook, website"}}
                       <ul class="m-article-card__social">
                         {{#if website}}
                           <li>
-                            <a href="{{website}}" target="_blank" rel="noopener" aria-label="{{t "Website"}}">
+                            <a href="{{website}}" target="_blank" rel="noopener" aria-label="Website">
                               <span class="icon-globe" aria-hidden="true"></span>
                             </a>
                           </li>
@@ -84,7 +85,7 @@ into the {body} of the default.hbs template --}}
                           </li>
                         {{/if}}
                       </ul>
-                    {{/has}}
+                    {{/match}}
                   </div>
                 </div>
               </article>
@@ -94,4 +95,6 @@ into the {body} of the default.hbs template --}}
       </div>
     </div>
   </main>
-{{/post}}
+{{/with}}
+{{/inline}}
+{{> default}}

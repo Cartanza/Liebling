@@ -76,17 +76,17 @@ async function getCart() {
         cartData.items.forEach((item) => {
             const price = (item.unit_price / 100).toFixed(2);
             const itemHtml = 
-            '<li class="header-cart-item" style="display: -webkit-box;display: -webkit-flex;display: -moz-box;display: -ms-flexbox;display: flex;flex-wrap: wrap;align-items: center;padding-bottom: 5px;padding-top: 5px;">' +
-                '<div class="header-cart-item-img" style="width: 80px;position: relative;margin-right: 20px;">' +
+            '<li class="header-cart-item">' +
+                '<div class="header-cart-item-img">' +
                 '<a href="/products/' + item.product.slug +'">' +
                     '<img src="/content/images/products/' + item.variant.image_src + '" alt="' + item.product.title + '" title="' + item.product.title + '">' +
                 '</a>' +
                 '</div>' +
-                '<div class="header-cart-item-txt" style="width: calc(100% - 100px);text-align: left;">' +
+                '<div class="header-cart-item-txt">' +
                 '<a href="/products/' + item.product.slug +'" class="header-cart-item-name">' +
                     item.product.title +
                 '</a>' +
-                '<span class="header-cart-item-info" style="display: block;font-size: 12px;color: #888888;line-height: 1.5;">' +
+                '<span class="header-cart-item-info">' +
                     item.quantity + 'x $' + price
                 '</span>' +
                 '</div>' +

@@ -1,3 +1,4 @@
+{{#*inline "body"}}
 {{!--
 This template is used for the index page.
 It can be used also as the home page or the default page.
@@ -18,24 +19,24 @@ It can be used also as the home page or the default page.
 
 {{!-- The tag below means: insert everything in this file
 into the {body} of the default.hbs template --}}
-{{!< default}}
+
 
 {{!-- Special header.hbs partial to generate the <header> tag --}}
-{{> header background=@site.cover_image}}
+{{> partials/header background=@root.site.cover_image}}
 
 <main class="main-wrap">
   {{!-- Inject styles of the hero image to make it responsive --}}
-  {{> hero background=@site.cover_image}}
+  {{> partials/hero background=@root.site.cover_image}}
   <div class="m-hero__content" data-animate="fade-down">
-    <h1 class="m-hero-title bigger">{{@site.title}}</h1>
-    {{#if @site.description}}
-      <p class="m-hero-description bigger">{{@site.description}}</p>
+    <h1 class="m-hero-title bigger">{{@root.site.title}}</h1>
+    {{#if @root.site.description}}
+      <p class="m-hero-description bigger">{{@root.site.description}}</p>
     {{/if}}
-    {{#if @custom.use_custom_cta}}
-      <a href="{{@custom.custom_cta_url}}" class="m-button filled">{{@custom.custom_cta_text}}</a>
+    {{#if @root.custom.use_custom_cta}}
+      <a href="{{@root.custom.custom_cta_url}}" class="m-button filled">{{@root.custom.custom_cta_text}}</a>
     {{else}}
-      {{#if @site.members_enabled}}
-        <a href="{{@site.url}}/newsletter" class="m-button filled js-newsletter">{{t "Subscribe"}}</a>
+      {{#if @root.site.members_enabled}}
+        <a href="{{@root.site.url}}/newsletter" class="m-button filled js-newsletter">"Subscribe"</a>
       {{/if}}
     {{/if}}
   </div>
@@ -66,7 +67,7 @@ into the {body} of the default.hbs template --}}
                         {{/if}}
                       </div>
                       <div class="m-featured-article__meta">
-                        <a href="{{primary_author.url}}" class="m-featured-article__author js-tooltip" aria-label="{{primary_author.name}}" data-tippy-content="{{t "Posted by"}} {{primary_author.name}} {{authors autolink="false" from="2" prefix=(t "Among with") separator=" , "}}">
+                        <a href="{{primary_author.url}}" class="m-featured-article__author js-tooltip" aria-label="{{primary_author.name}}" data-tippy-content="Posted by {{primary_author.name}}{{#if (gt (length authors) 1)}} Among with {{#foreach authors}}{{#if (gt @index 0)}}{{name}}{{#unless @last}} , {{/unless}}{{/if}}{{/foreach}}{{/if}}">
                           {{#if primary_author.profile_image}}
                             <div style="background-image: url({{img_url primary_author.profile_image size="xs"}});"></div>
                           {{else}}
@@ -79,33 +80,33 @@ into the {body} of the default.hbs template --}}
                       </div>
                       <div class="m-featured-article__ribbon">
                         <span class="icon-star"></span>
-                        <span>{{t "Featured"}}</span>
+                        <span>Featured</span>
                       </div>
-                      <a href="{{url}}" class="m-featured-article__content">
+                      <a href="/{{slug}}" class="m-featured-article__content">
                         <h2 class="m-featured-article__title js-featured-article-title" title="{{title}}">
                           {{title}}
                         </h2>
                         <div class="m-featured-article__timestamp">
                           <span>{{date published_at timeago="true"}}</span>
                           <span>&bull;</span>
-                          <span>{{reading_time minute=(t "1 min read") minutes=(t "% min read")}}</span>
+                          <span>{{reading_time minute="1 min read" minutes="% min read"}}</span>
                         </div>
                       </a>
                     </article>
                   </div>
                 {{/foreach}}
               </div>
-              <button class="m-icon-button in-featured-articles swiper-button-prev js-featured-slider-button" aria-label="{{t "Previous"}}">
+              <button class="m-icon-button in-featured-articles swiper-button-prev js-featured-slider-button" aria-label="Previous">
                 <span class="icon-arrow-left" aria-hidden="true"></span>
               </button>
-              <button class="m-icon-button in-featured-articles swiper-button-next js-featured-slider-button" aria-label="{{t "Next"}}">
+              <button class="m-icon-button in-featured-articles swiper-button-next js-featured-slider-button" aria-label="Next">
                 <span class="icon-arrow-right" aria-hidden="true"></span>
               </button>
             </div>
           {{/if}}
         {{/get}}
         {{!-- The tag below iterates over all the posts --}}
-        {{> "loop"}}
+        {{> partials/loop}}
       </div>
     </div>
     {{!-- Links to Previous/Next posts --}}
@@ -117,3 +118,5 @@ into the {body} of the default.hbs template --}}
 {{#contentFor "scripts"}}
   <script defer src="{{asset "js/home.js"}}"></script>
 {{/contentFor}}
+{{/inline}}
+{{> default}}

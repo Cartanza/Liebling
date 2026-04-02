@@ -1,3 +1,4 @@
+{{#*inline "body"}}
 {{!--
 This template is used for the author page.
 --}}
@@ -14,18 +15,18 @@ This template is used for the author page.
 
 {{!-- The tag below means: insert everything in this file
 into the {body} of the default.hbs template --}}
-{{!< default}}
+
 
 {{!-- Special header.hbs partial to generate the <header> tag --}}
-{{#author}}
-  {{> header background=cover_image}}
-{{/author}}
+{{#with author}}
+  {{> partials/header background=cover_image}}
+{{/with}}
 
 <main class="main-wrap">
   {{!-- Everything inside the #author tags pulls data from the author --}}
-  {{#author}}
+  {{#with author}}
     {{!-- Inject styles of the hero image to make it responsive --}}
-    {{> hero background=cover_image}}
+    {{> partials/hero background=cover_image}}
       <div class="m-hero__content" data-animate="fade-down">
         {{#if profile_image}}
           <div class="m-hero-avatar" style="background-image: url({{profile_image}});"></div>
@@ -37,11 +38,11 @@ into the {body} of the default.hbs template --}}
           <p class="m-hero-description">{{bio}}</p>
         {{/if}}
         <div class="m-hero__meta">
-          {{#has any="twitter, facebook, website"}}
+          {{#match any "twitter, facebook, website"}}
             <ul class="m-hero-social">
               {{#if website}}
                 <li>
-                  <a href="{{website}}" target="_blank" rel="noopener" aria-label="{{t "Website"}}">
+                  <a href="{{website}}" target="_blank" rel="noopener" aria-label="Website">
                     <span class="icon-globe"></span>
                   </a>
                 </li>
@@ -61,10 +62,10 @@ into the {body} of the default.hbs template --}}
                 </li>
               {{/if}}
             </ul>
-          {{/has}}
+          {{/match}}
           <ul class="m-hero-stats">
             <li>
-              {{plural ../pagination.total empty=(t "No posts") singular=(t "1 post") plural=(t "% posts")}}
+              {{plural ../pagination.total empty="No posts" singular="1 post" plural="% posts"}}
             </li>
             {{#if location}}
               <li>&bull;</li>
@@ -74,16 +75,18 @@ into the {body} of the default.hbs template --}}
         </div>
       </div>
     </section>
-  {{/author}}
+  {{/with}}
   
   <div class="l-content">
     <div class="l-wrapper" data-animate="fade-up">
       <div class="l-grid centered">
         {{!-- The tag below iterates over all the posts --}}
-        {{> "loop"}}
+        {{> partials/loop}}
       </div>
     </div>
     {{!-- Links to Previous/Next posts --}}
     {{pagination}}
   </div>
 </main>
+{{/inline}}
+{{> default}}
